@@ -1,0 +1,102 @@
+﻿@model u21529664_HW05.Models.StudentVM
+
+@using (Html.BeginForm("SearchStudent", "Home", FormMethod.Post, new { @class = "form-inline" }))
+{
+    <form class="form-inline">
+
+        <h2>Students</h2>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search Student Name" name="sname" />
+        </div>
+        <div class="form-group">
+            <select class="form-control" name="sclass">
+                <option value="none">Select a Class</option>
+                @foreach (var classSelected in Model.Class)
+                {
+                    <option value="@classSelected.ClassName">@classSelected.ClassName</option>
+                }
+            </select>
+        </div>
+
+        <select class="form-control" name="BookId" style="display: none">
+            <option value="@Model.Books.BookID">Select a Class</option>
+
+        </select>
+
+
+
+        <div class="form-group">
+            <input type="submit" value="Search" style="width:150px" class="btn btn-success form-control" />
+        </div>
+
+
+        <div class="form-group">
+            @Html.ActionLink("Clear", "Students", "Home", new { bookId = Model.Books.BookID }, new { @class = "btn btn-danger form-control", @style = "width:150px" })
+        </div>
+
+        
+
+    </form>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Surname
+        </th>
+        <th>
+            Class
+        </th>
+        <th>
+            Points
+        </th>
+
+        @if (Model.Students.Where(s=> s.Book == true).Count() >= 1)
+        {
+            <th>Return Book</th>
+        }
+        else
+        {
+            <th>Borrow Book</th>
+        }
+
+    </tr>
+
+
+    @foreach (var StudentItem in Model.Students)
+    {
+        <tr>
+            <td>
+                @StudentItem.Name
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => StudentItem.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => StudentItem.Class)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => StudentItem.Point)
+            </td>
+
+            <td>
+                @if (StudentItem.Book == true)
+                {
+                    @Html.ActionLink("Return book", "ReturnBook", new { studentId = StudentItem.StudentID, bookId = Model.Books.BookID }, new { @class = "btn btn-primary", @style = "width:150px" })
+
+                }
+                @if (StudentItem.Book == false && Model.Students.Where(s => s.Book == true).Count() == 0)
+                {
+                    @Html.ActionLink("Borrow Book", "BorrowBook", new { studentId = StudentItem.StudentID, bookId = Model.Books.BookID }, new { @class = "btn btn-primary", @style = "width:150px" })
+                }
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+

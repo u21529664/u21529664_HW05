@@ -1,0 +1,74 @@
+﻿@model u21529664_HW05.Models.BookDetailsVM
+
+
+<h2>
+    @Model.Books.Name -
+    @if (Model.Books.Status == "Book Out")
+    {
+        <span style="color:red">Book Out</span>
+    }
+    else
+    {
+        <span style="color:green">Available</span>
+    }
+</h2>
+
+ <table class="table">
+     <tr>
+         <td>
+            <h3>
+                # Borrows - @Model.BorrowedBooks.Count()
+            </h3>
+        </td>
+         <td></td>
+         <td></td>
+         <td>
+
+             @Html.ActionLink("View Students", "Students", new { bookId = Model.Books.BookID }, new { @class = "btn btn-primary" })
+         </td>
+     </tr>
+
+ </table>
+
+
+<table class ="table">
+    <tr>
+        <th>
+            BorrowID
+        </th>
+
+      
+        <th>
+            TakenDate
+        </th>
+        <th>
+            BroughtDate
+        </th>
+        <th>
+            Borrowed By
+        </th>
+
+    </tr>
+
+    @foreach (var BookItem in Model.BorrowedBooks)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => BookItem.BorrowID)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => BookItem.TakenDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => BookItem.BroughtDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => BookItem.StudentName)
+            </td>
+
+        </tr>
+    }
+
+</table>
+
