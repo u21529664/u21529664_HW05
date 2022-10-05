@@ -40,7 +40,7 @@ namespace u21529664_HW05.Controllers
                 for (int k = 0; k < books.Count(); k++)
                 {
                     string name = student.Name + " " + student.Surname;
-                    if (books[k].StudentName == name && books[k].BroughtDate == null)
+                    if (books[k].StudentName == name && (books[k].BroughtDate == null || books[k].BroughtDate == ""))
                     {
                         student.Book = true;
                     }
